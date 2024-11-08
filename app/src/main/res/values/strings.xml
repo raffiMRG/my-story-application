@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">MyStoryApplication</string>
+    <string name="icon_desc">dicoding icon</string>
+    <string name="login_title">Ini Login Title</string>
+    <string name="register_title">Ini Register Title</string>
+
+    <string name="label_username">Username</string>
+    <string name="label_email">E-mail</string>
+
+    <string name="label_password">Password</string>
+    <string name="alert_password">Password harus 8 karakter atau lebih</string>
+
+    <string name="signup">Sign Up</string>
+    <string name="signin">Sign In</string>
+    <string name="empty_image_warning">Silakan masukkan berkas gambar terlebih dahulu.</string>
+
+    <string name="from_text">From : %1$s</string>
+
+    <string name="camera">Camera</string>
+    <string name="galery">Galery</string>
+    <string name="upload">Upload</string>
+    <string name="description_hint">Description</string>
+</resources>

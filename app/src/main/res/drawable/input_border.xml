@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Tidak ada warna fill (background transparan) -->
+    <solid android:color="@android:color/transparent" />
+
+    <!-- Border (outline) dengan warna hitam dan ketebalan 2dp -->
+    <stroke
+        android:color="@android:color/black"
+        android:width="2dp" />
+
+    <!-- Radius sudut border -->
+    <corners android:radius="16dp" />
+</shape>
