@@ -30,7 +30,6 @@ class ListStoryViewModel(private val repository: UserRepository): ViewModel() {
 
     fun getStoryModel(token: String) {
         _isLoading.value = true
-//        val oldToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLXpXeFYxdU44UEhBRjc1QTEiLCJpYXQiOjE3MzA5MjcyODZ9.iBbcIlCC4U5oV7kT4BsMJ9LZnvPz2U1vMZ714yx0O2A"
 
         val client = ApiConfig.getApiService(token).getAllStories()
         client.enqueue(object : Callback<StoryResponse> {
