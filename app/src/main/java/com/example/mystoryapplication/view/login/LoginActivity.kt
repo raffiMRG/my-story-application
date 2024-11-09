@@ -1,10 +1,14 @@
 package com.example.mystoryapplication.view.login
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mystoryapplication.databinding.ActivityLoginBinding
 import com.example.mystoryapplication.data.response.LoginResult
@@ -13,32 +17,33 @@ import com.example.mystoryapplication.view.home.ListStoryActivity
 import com.example.mystoryapplication.view.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
-//    private lateinit var textjudul: TextView
-private lateinit var binding: ActivityLoginBinding
-private lateinit var token: String
-private val viewModel by viewModels<LoginViewModel> {
-    ViewModelFactory.getInstance(this)
-}
+    private lateinit var binding: ActivityLoginBinding
+    private val viewModel by viewModels<LoginViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnRegister.setOnClickListener{ goToRegister() }
-
         binding.btnLogin.setOnClickListener{ login() }
 
-        viewModel.loginResult.observe(this){
-            Log.d("viewModelObserve", "masuk ke view model observe")
-            setupAction(it)
+        binding.btnRegister.setOnClickListener{ goToRegister() }
+
+        viewModel.isLoading.observe(this@LoginActivity){
+            showLoading(it)
         }
 
         viewModel.getSession().observe(this) { user ->
             Log.d("printToken", user.token)
             if (user.token != "") {
                 Log.d("tokenFounded", user.token)
-                startActivity(Intent(this, ListStoryActivity::class.java))
+
+                val intent = Intent(this, ListStoryActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+
                 finish()
             }else{
                 Log.d("printToken", "tidak ada token yang ditemukan")
@@ -46,22 +51,42 @@ private val viewModel by viewModels<LoginViewModel> {
         }
 
         Log.d("tokenUnFounded", "tidak ada token yang ditemukan")
+        playAnimation()
+    }
+
+    private fun playAnimation() {
+        ObjectAnimator.ofFloat(binding.imageView, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 6000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
+
+        val title = ObjectAnimator.ofFloat(binding.titleTextView, View.ALPHA, 1f).setDuration(100)
+        val emailEditText =
+            ObjectAnimator.ofFloat(binding.edLoginEmail, View.ALPHA, 1f).setDuration(200)
+        val passwordEditText =
+            ObjectAnimator.ofFloat(binding.edLoginPassword, View.ALPHA, 1f).setDuration(200)
+        val btnSignIn =
+            ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(200)
+        val btnSignUp =
+            ObjectAnimator.ofFloat(binding.btnRegister, View.ALPHA, 1f).setDuration(200)
+
+        AnimatorSet().apply {
+            playSequentially(
+                title,
+                emailEditText,
+                passwordEditText,
+                btnSignIn,
+                btnSignUp
+            )
+            startDelay = 200
+        }.start()
     }
 
     private fun setupAction(loginResult : LoginResult) {
         Log.d("setupAction", loginResult.token)
         viewModel.saveSession(loginResult)
         startActivity(Intent(this, ListStoryActivity::class.java))
-//        AlertDialog.Builder(this).apply {
-//            setTitle("Yeah!")
-//            val name = loginResult.name
-//            setMessage("Akun dengan nama $name sudah jadi nih. Yuk, login dan belajar coding.")
-//            setPositiveButton("Lanjut") { _, _ ->
-//                finish()
-//            }
-//            create()
-//            show()
-//        }
     }
 
     private fun goToRegister(){
@@ -70,17 +95,52 @@ private val viewModel by viewModels<LoginViewModel> {
     }
 
     private fun login(){
+        showLoading(true)
         val email = binding.edLoginEmail.editText?.text.toString()
         val password = binding.edLoginPassword.editText?.text.toString()
-        if (email == ""){
-            Log.d("InputRegister", "username kosong")
+        if (email == "" || password == ""){
+            AlertDialog.Builder(this).apply {
+            setTitle("Alert!!")
+            setMessage("Username Atau Password Kosong")
+            setPositiveButton("Ok") { _, _ ->
+                showLoading(false)
+            }
+            create()
+            show()
+        }
         }else{
             viewModel.tryLogin(email, password)
+            viewModel.loginResponse.observe(this){ response ->
+                if (!response.error){
+//                    Log.d("ErrorResponse", "this is error!!!!")
+                    viewModel.loginResult.observe(this){
+                        Log.d("viewModelObserve", "masuk ke view model observe")
+                        setupAction(it)
+                    }
+                }
+            }
+            viewModel.isFailure.observe(this){
+                if (it){
+//                Log.d("ErrorResponse", "its fine ghencana")
+                    AlertDialog.Builder(this).apply {
+                        setTitle("Alert!!")
+                        setMessage("Username Atau Password Tidak Valid")
+                        setPositiveButton("Ok") { _, _ ->
+                            showLoading(false)
+                        }
+                        create()
+                        show()
+                    }
+                }
+            }
         }
     }
 
-//    musculin status succes / error dari model nanti
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    private fun showLoading(isLoading: Boolean){
+        if (isLoading){
+            binding.loading.visibility = View.VISIBLE
+        }else{
+            binding.loading.visibility = View.INVISIBLE
+        }
     }
 }

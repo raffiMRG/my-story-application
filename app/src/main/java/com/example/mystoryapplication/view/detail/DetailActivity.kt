@@ -15,6 +15,7 @@ import com.example.mystoryapplication.databinding.ItemRowBinding
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     override fun onCreate(savedInstanceState: Bundle?) {
+        title = "Detail Story"
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setTheme(R.style.Theme_SecondActivity)
@@ -32,7 +33,7 @@ class DetailActivity : AppCompatActivity() {
             .into(binding.ivDetailPhoto)
 
         binding.apply {
-            tvDetailName.text = getString(R.string.from_text, data?.name ?: "Unknown")
+            tvDetailName.text = data?.name
             tvDetailDescription.text = data?.description
         }
     }

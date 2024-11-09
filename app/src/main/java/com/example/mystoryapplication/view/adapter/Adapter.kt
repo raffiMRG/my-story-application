@@ -1,8 +1,11 @@
-package com.example.coba1submission.ui.adapter
+package com.example.mystoryapplication.view.adapter
 
+import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -23,14 +26,23 @@ class Adapter : ListAdapter<ListStoryItem, Adapter.MyViewHolder>(DIFF_CALLBACK) 
 
     class MyViewHolder(val binding: ItemRowBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(review: ListStoryItem){
-            binding.eventTitle.text = review.name
+            binding.tvItemName.text = review.name
             Glide.with(binding.root)
                 .load(review.photoUrl)
-                .into(binding.recImage)
+                .into(binding.ivItemPhoto)
             this.itemView.setOnClickListener{
                 val intentDetail = Intent(this.itemView.context, DetailActivity::class.java)
                 intentDetail.putExtra("key_story", review)
-                this.itemView.context.startActivity(intentDetail)
+//                this.itemView.context.startActivity(intentDetail)
+//                this.itemView.context.startActivity(intentDetail, ActivityOptionsCompat.makeSceneTransitionAnimation(itemView.context as Activity).toBundle())
+
+                val optionsCompat: ActivityOptionsCompat =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        itemView.context as Activity,
+                        Pair(binding.ivItemPhoto, "img_story"),
+                        Pair(binding.tvItemName, "title_story")
+                    )
+                itemView.context.startActivity(intentDetail, optionsCompat.toBundle())
             }
         }
     }

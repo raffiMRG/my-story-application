@@ -2,6 +2,7 @@ package com.example.mystoryapplication.view.add_story
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,8 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
@@ -22,6 +25,8 @@ import com.example.mystoryapplication.data.api.ApiConfig
 import com.example.mystoryapplication.data.response.StoryResponse
 import com.example.mystoryapplication.databinding.ActivityAddStoryBinding
 import com.example.mystoryapplication.view.ViewModelFactory
+import com.example.mystoryapplication.view.camerax.CameraActivity
+import com.example.mystoryapplication.view.camerax.CameraActivity.Companion.CAMERAX_RESULT
 import com.example.mystoryapplication.view.home.ListStoryActivity
 import com.example.mystoryapplication.view.main.MainViewModel
 import com.google.gson.Gson
@@ -39,20 +44,57 @@ class AddStoryActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(this)
     }
 
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                Toast.makeText(this, "Permission request granted", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Permission request denied", Toast.LENGTH_LONG).show()
+            }
+        }
+
+    private fun allPermissionsGranted() =
+        ContextCompat.checkSelfPermission(
+            this,
+            REQUIRED_PERMISSION
+        ) == PackageManager.PERMISSION_GRANTED
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        title = "Add Story"
         super.onCreate(savedInstanceState)
         binding = ActivityAddStoryBinding.inflate(layoutInflater)
         setTheme(R.style.Theme_SecondActivity)
         setContentView(binding.root)
 
+        if (!allPermissionsGranted()) {
+            requestPermissionLauncher.launch(REQUIRED_PERMISSION)
+        }
+
         binding.galleryButton.setOnClickListener{ startGallery() }
-        binding.uploadButton.setOnClickListener{
+        binding.cameraButton.setOnClickListener{ startCameraX() }
+        binding.buttonAdd.setOnClickListener{
             viewModel.getSession().observe(this){
 //                Log.d("tokenDariStory", it.token)
                 uploadImage(it.token)
             }
         }
 
+    }
+
+    private fun startCameraX() {
+        val intent = Intent(this, CameraActivity::class.java)
+        launcherIntentCameraX.launch(intent)
+    }
+
+    private val launcherIntentCameraX = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (it.resultCode == CAMERAX_RESULT) {
+            currentImageUri = it.data?.getStringExtra(CameraActivity.EXTRA_CAMERAX_IMAGE)?.toUri()
+            showImage()
+        }
     }
 
     private fun startGallery() {
