@@ -72,7 +72,6 @@ class RegisterActivity : AppCompatActivity() {
                 }
                 viewModel.isFailure.observe(this){
                     if (it){
-    //                Log.d("ErrorResponse", "its fine ghencana")
                         AlertDialog.Builder(this).apply {
                             setTitle("Alert!!")
                             setMessage("Registrasi Gagal")
@@ -84,54 +83,6 @@ class RegisterActivity : AppCompatActivity() {
                         }
                     }
                 }
-
-//                val apiService = ApiConfig.getApiService()
-//                val userRequest = RegisterRequest(
-//                    name = username,
-//                    email = email,
-//                    password = password
-//                )
-
-//                apiService.createUser(userRequest).enqueue(object : Callback<BasicResponse> {
-//                    override fun onResponse(
-//                        call: Call<BasicResponse>,
-//                        response: Response<BasicResponse>
-//                    ) {
-//                        if (response.isSuccessful) {
-//                            val responseBody = response.body()
-//                            // Tangani response sukses di sini
-//                            responseBody?.let {
-//                                AlertDialog.Builder(this@RegisterActivity).apply {
-//                                    setTitle("Success!")
-//                                    setMessage("Selamat Akun Anda Sudah Berhasil Di Buat, Silahkan Login Dengan Akun Tersebut")
-//                                    setPositiveButton("Lanjut") { _, _ ->
-//                                        val intent = Intent(context, LoginActivity::class.java)
-//                                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-//                                        startActivity(intent)
-//                                        finish()
-//                                    }
-//                                    create()
-//                                    show()
-//                                }
-//                            }
-//                        } else {
-//                            val responseBody = response.body()
-//                            responseBody.let {statusFailed ->
-//                                AlertDialog.Builder(this@RegisterActivity).apply {
-//                                    setTitle("Failed!!")
-//                                    setMessage(statusFailed?.message)
-//                                    setPositiveButton("Ok") { _, _ ->
-//                                    }
-//                                    create()
-//                                    show()
-//                                }
-//                            }
-//                        }
-//                    }
-//
-//                    override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
-//                    }
-//                })
             }
         }
 

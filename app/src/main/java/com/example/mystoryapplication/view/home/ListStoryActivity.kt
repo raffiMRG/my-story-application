@@ -1,11 +1,11 @@
 package com.example.mystoryapplication.view.home
 
 import android.content.Intent
-import android.media.session.MediaSession.Token
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +14,6 @@ import com.example.mystoryapplication.R
 import com.example.mystoryapplication.databinding.ActivityListStoryBinding
 import com.example.mystoryapplication.view.ViewModelFactory
 import com.example.mystoryapplication.view.add_story.AddStoryActivity
-import com.example.mystoryapplication.view.login.LoginActivity
 import com.example.mystoryapplication.view.main.MainActivity
 
 class ListStoryActivity : AppCompatActivity() {
@@ -32,6 +31,10 @@ class ListStoryActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this@ListStoryActivity)
         binding.rvStory.layoutManager = layoutManager
+
+        viewModel.isLoading.observe(this){isLoading ->
+            showLoading(isLoading)
+        }
 
         viewModel.getSession().observe(this){ data ->
             viewModel.getStoryModel(data.token)
@@ -58,19 +61,25 @@ class ListStoryActivity : AppCompatActivity() {
             R.id.action_logout -> {
                 try {
                     viewModel.logout()
-                    Log.d("LOGOUT", "logout")
                     val intent = Intent(this, MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
 
-                    // Menutup HomeActivity
                     finish()
                 }catch (e: Exception){
-                    Log.d("ErrorLogout", "onOptionsItemSelected: ")
+                    showToast(e.message.toString())
                 }
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

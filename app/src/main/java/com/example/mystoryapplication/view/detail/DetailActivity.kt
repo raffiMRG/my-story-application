@@ -2,15 +2,11 @@ package com.example.mystoryapplication.view.detail
 
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.mystoryapplication.R
 import com.example.mystoryapplication.data.response.ListStoryItem
 import com.example.mystoryapplication.databinding.ActivityDetailBinding
-import com.example.mystoryapplication.databinding.ItemRowBinding
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding

@@ -21,8 +21,6 @@ class ListStoryViewModel(private val repository: UserRepository): ViewModel() {
     private val _listStoryItem = MutableLiveData<List<ListStoryItem?>?>()
     val listEvents: LiveData<List<ListStoryItem?>?> = _listStoryItem
 
-//    var loginResult: LiveData<LoginResult>
-
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -37,7 +35,6 @@ class ListStoryViewModel(private val repository: UserRepository): ViewModel() {
     }
     fun getStoryModel(token: String) {
         _isLoading.value = true
-//        val oldToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLXpXeFYxdU44UEhBRjc1QTEiLCJpYXQiOjE3MzA5MjcyODZ9.iBbcIlCC4U5oV7kT4BsMJ9LZnvPz2U1vMZ714yx0O2A"
 
         val client = ApiConfig.getApiService(token).getAllStories()
         client.enqueue(object : Callback<StoryResponse> {
@@ -50,7 +47,10 @@ class ListStoryViewModel(private val repository: UserRepository): ViewModel() {
                     response.body()?.let {
                         _storyResponse.value = it
                         _listStoryItem.value = it.listStory
+                        _isLoading.value = false
                     }
+                }else{
+                    _isLoading.value = false
                 }
             }
 

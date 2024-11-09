@@ -1,6 +1,5 @@
 package com.example.mystoryapplication.view.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +10,6 @@ import com.example.mystoryapplication.data.api.ApiConfig
 import com.example.mystoryapplication.data.request.LoginRequest
 import com.example.mystoryapplication.data.response.LoginResponse
 import com.example.mystoryapplication.data.response.LoginResult
-import com.example.mystoryapplication.data.response.StoryResponse
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -61,7 +59,6 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
                     response.body()?.let {
                         _loginResponse.value = it
                         _loginResult.value = it.loginResult
-                        Log.d("LOGIN_SUCCESS", it.loginResult.token)
                     }
                 } else {
                     _isFailure.value = true
@@ -70,7 +67,6 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Log.d("onValuerCondition", t.message.toString())
                 _isLoading.value = false
             }
         })
