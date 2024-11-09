@@ -67,12 +67,12 @@
         android:gravity="top"
         android:background="@drawable/input_border"
         android:layout_marginHorizontal="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/uploadButton"
+        app:layout_constraintBottom_toTopOf="@+id/button_add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5" />
 
     <Button
-        android:id="@+id/uploadButton"
+        android:id="@+id/button_add"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

@@ -21,9 +21,9 @@
             android:weightSum="5.5">
 
             <ImageView
+                android:id="@+id/iv_item_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:id="@+id/recImage"
                 android:layout_weight="4"
                 android:importantForAccessibility="no"
                 android:scaleType="centerCrop"
@@ -37,12 +37,12 @@
                 android:padding="10dp">
 
                 <TextView
+                    android:id="@+id/tv_item_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/login_title"
                     android:textSize="20sp"
-                    android:maxLines="1"
-                    android:id="@+id/event_title"/>
+                    android:maxLines="1" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

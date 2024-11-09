@@ -11,6 +11,7 @@ import com.example.mystoryapplication.data.api.ApiConfig
 import com.example.mystoryapplication.data.request.LoginRequest
 import com.example.mystoryapplication.data.response.LoginResponse
 import com.example.mystoryapplication.data.response.LoginResult
+import com.example.mystoryapplication.data.response.StoryResponse
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,6 +19,13 @@ import retrofit2.Response
 
 class LoginViewModel(private val repository: UserRepository) : ViewModel() {
     private val _loginResponse = MutableLiveData<LoginResponse>()
+    val loginResponse: LiveData<LoginResponse> = _loginResponse
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _isFailure = MutableLiveData<Boolean>()
+    val isFailure: LiveData<Boolean> = _isFailure
 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
@@ -34,6 +42,8 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
     }
 
     fun tryLogin(email: String, password: String){
+        _isLoading.value = true
+        _isFailure.value = false
         val apiService = ApiConfig.getApiService()
         val userRequest = LoginRequest(
             email = email,
@@ -46,24 +56,22 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
                 response: Response<LoginResponse>
             ) {
                 if (response.isSuccessful) {
-//                    val responseBody = response.body()
-                    // Tangani response sukses di sini
-//                    token = responseBody?.loginResult?.token.toString()
-//                    responseBody?.let { showToast(it.message) }
+                    _isLoading.value = false
+                    _isFailure.value = false
                     response.body()?.let {
                         _loginResponse.value = it
                         _loginResult.value = it.loginResult
                         Log.d("LOGIN_SUCCESS", it.loginResult.token)
                     }
                 } else {
-                    val responseBody = response.body()
-                    // Tangani error di sini
-                    Log.d("errorViewModel", "error in view model line 55")
+                    _isFailure.value = true
+                    _isLoading.value = false
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                // Tangani kegagalan request di sini
+                Log.d("onValuerCondition", t.message.toString())
+                _isLoading.value = false
             }
         })
     }

@@ -30,6 +30,17 @@
         app:layout_constraintGuide_percent="0.30191082"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"/>
+
+
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="0dp"
@@ -45,7 +56,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal"
-        tools:alpha="100" />
+        android:alpha="0"
+        tools:alpha="100"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
@@ -63,7 +75,8 @@
         app:layout_constraintTop_toBottomOf="@+id/guideline1"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        />
+        android:alpha="0"
+        tools:alpha="100"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -81,7 +94,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        />
+        android:alpha="0"
+        tools:alpha="100"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -100,7 +114,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         app:showAlert="true"
-        />
+        android:alpha="0"
+        tools:alpha="100"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_register"
@@ -115,7 +130,9 @@
         android:layout_marginTop="32dp"
         app:layout_constraintTop_toBottomOf="@id/ed_register_password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:alpha="0"
+        tools:alpha="100"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_login"
@@ -130,6 +147,8 @@
         android:layout_marginTop="32dp"
         app:layout_constraintTop_toBottomOf="@id/btn_register"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:alpha="0"
+        tools:alpha="100"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
