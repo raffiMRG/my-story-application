@@ -3,13 +3,11 @@ package com.example.mystoryapplication.view.camerax
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.OrientationEventListener
 import android.view.Surface
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -17,9 +15,6 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.mystoryapplication.R
 import com.example.mystoryapplication.databinding.ActivityCameraBinding
 import com.example.mystoryapplication.view.add_story.createCustomTempFile
 
@@ -77,7 +72,6 @@ class CameraActivity : AppCompatActivity() {
                     "Gagal memunculkan kamera.",
                     Toast.LENGTH_SHORT
                 ).show()
-                Log.e(TAG, "startCamera: ${exc.message}")
             }
         }, ContextCompat.getMainExecutor(this))
     }
@@ -106,7 +100,6 @@ class CameraActivity : AppCompatActivity() {
                         "Gagal mengambil gambar.",
                         Toast.LENGTH_SHORT
                     ).show()
-                    Log.e(TAG, "onError: ${exc.message}")
                 }
             }
         )
@@ -154,7 +147,6 @@ class CameraActivity : AppCompatActivity() {
         orientationEventListener.disable()
     }
     companion object {
-        private const val TAG = "CameraActivity"
         const val EXTRA_CAMERAX_IMAGE = "CameraX Image"
         const val CAMERAX_RESULT = 200
     }

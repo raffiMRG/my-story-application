@@ -5,20 +5,14 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.mystoryapplication.R
 import com.example.mystoryapplication.data.api.ApiConfig
@@ -76,7 +70,6 @@ class AddStoryActivity : AppCompatActivity() {
         binding.cameraButton.setOnClickListener{ startCameraX() }
         binding.buttonAdd.setOnClickListener{
             viewModel.getSession().observe(this){
-//                Log.d("tokenDariStory", it.token)
                 uploadImage(it.token)
             }
         }
@@ -107,13 +100,12 @@ class AddStoryActivity : AppCompatActivity() {
             currentImageUri = uri
             showImage()
         } else {
-            Log.d("Photo Picker", "No media selected")
+            showToast("No media selected")
         }
     }
 
     private fun showImage() {
         currentImageUri?.let {
-            Log.d("Image URI", "showImage: $it")
             binding.previewImageView.setImageURI(it)
         }
     }
@@ -121,7 +113,6 @@ class AddStoryActivity : AppCompatActivity() {
     private fun uploadImage(token: String) {
         currentImageUri?.let { uri ->
             val imageFile = uriToFile(uri, this).reduceFileImage()
-            Log.d("Image File", "showImage: ${imageFile.path}")
             val description = binding.edAddDescription.text.toString()
 
             showLoading(true)

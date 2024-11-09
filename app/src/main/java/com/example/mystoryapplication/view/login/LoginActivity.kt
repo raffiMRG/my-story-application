@@ -4,9 +4,7 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -36,21 +34,14 @@ class LoginActivity : AppCompatActivity() {
         }
 
         viewModel.getSession().observe(this) { user ->
-            Log.d("printToken", user.token)
             if (user.token != "") {
-                Log.d("tokenFounded", user.token)
-
                 val intent = Intent(this, ListStoryActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
 
                 finish()
-            }else{
-                Log.d("printToken", "tidak ada token yang ditemukan")
             }
         }
-
-        Log.d("tokenUnFounded", "tidak ada token yang ditemukan")
         playAnimation()
     }
 
@@ -84,7 +75,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupAction(loginResult : LoginResult) {
-        Log.d("setupAction", loginResult.token)
         viewModel.saveSession(loginResult)
         startActivity(Intent(this, ListStoryActivity::class.java))
     }
@@ -112,16 +102,13 @@ class LoginActivity : AppCompatActivity() {
             viewModel.tryLogin(email, password)
             viewModel.loginResponse.observe(this){ response ->
                 if (!response.error){
-//                    Log.d("ErrorResponse", "this is error!!!!")
                     viewModel.loginResult.observe(this){
-                        Log.d("viewModelObserve", "masuk ke view model observe")
                         setupAction(it)
                     }
                 }
             }
             viewModel.isFailure.observe(this){
                 if (it){
-//                Log.d("ErrorResponse", "its fine ghencana")
                     AlertDialog.Builder(this).apply {
                         setTitle("Alert!!")
                         setMessage("Username Atau Password Tidak Valid")

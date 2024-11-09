@@ -21,8 +21,6 @@ class ListStoryViewModel(private val repository: UserRepository): ViewModel() {
     private val _listStoryItem = MutableLiveData<List<ListStoryItem?>?>()
     val listEvents: LiveData<List<ListStoryItem?>?> = _listStoryItem
 
-//    var loginResult: LiveData<LoginResult>
-
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -49,7 +47,10 @@ class ListStoryViewModel(private val repository: UserRepository): ViewModel() {
                     response.body()?.let {
                         _storyResponse.value = it
                         _listStoryItem.value = it.listStory
+                        _isLoading.value = false
                     }
+                }else{
+                    _isLoading.value = false
                 }
             }
 

@@ -24,7 +24,7 @@ class Adapter : ListAdapter<ListStoryItem, Adapter.MyViewHolder>(DIFF_CALLBACK) 
         holder.bind(review)
     }
 
-    class MyViewHolder(val binding: ItemRowBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MyViewHolder(private val binding: ItemRowBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(review: ListStoryItem){
             binding.tvItemName.text = review.name
             Glide.with(binding.root)
@@ -33,8 +33,6 @@ class Adapter : ListAdapter<ListStoryItem, Adapter.MyViewHolder>(DIFF_CALLBACK) 
             this.itemView.setOnClickListener{
                 val intentDetail = Intent(this.itemView.context, DetailActivity::class.java)
                 intentDetail.putExtra("key_story", review)
-//                this.itemView.context.startActivity(intentDetail)
-//                this.itemView.context.startActivity(intentDetail, ActivityOptionsCompat.makeSceneTransitionAnimation(itemView.context as Activity).toBundle())
 
                 val optionsCompat: ActivityOptionsCompat =
                     ActivityOptionsCompat.makeSceneTransitionAnimation(
