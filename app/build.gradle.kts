@@ -14,9 +14,9 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-//        https://story-api.dicoding.dev/v1/register
-        buildConfigField("String", "BASE_URL", "\"https://story-api.dicoding.dev/\"")
-        buildConfigField("String", "HOST", "\"story-api.dicoding.dev\"")
+
+        buildConfigField("String", "BASE_URL", "\"https://your.api.endpoint/\"")
+        buildConfigField("String", "HOST", "\"your.api.endpoint\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
