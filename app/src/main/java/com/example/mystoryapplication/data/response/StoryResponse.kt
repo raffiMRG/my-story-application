@@ -33,11 +33,11 @@ data class ListStoryItem(
 	val description: String? = null,
 
 	@field:SerializedName("lon")
-	val lon: @RawValue Any? = null,
+	val lon: @RawValue Double? = null,
 
 	@field:SerializedName("id")
 	val id: String? = null,
 
 	@field:SerializedName("lat")
-	val lat: @RawValue Any? = null
+	val lat: @RawValue Double? = null
 ) : Parcelable

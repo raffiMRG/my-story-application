@@ -8,6 +8,7 @@ import com.example.mystoryapplication.view.main.MainViewModel
 import com.example.mystoryapplication.data.UserRepository
 import com.example.mystoryapplication.view.home.ListStoryViewModel
 import com.example.mystoryapplication.view.login.LoginViewModel
+import com.example.mystoryapplication.view.maps_story.MapsStoryViewModel
 import com.example.mystoryapplication.view.register.RegisterViewModel
 
 class ViewModelFactory(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
@@ -26,6 +27,9 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
             }
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 RegisterViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(MapsStoryViewModel::class.java) -> {
+                MapsStoryViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

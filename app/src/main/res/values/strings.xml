@@ -20,5 +20,7 @@
     <string name="upload">Upload</string>
     <string name="description_hint">Description</string>
     <string name="add">Add</string>
+    <string name="map">Maps</string>
     <string name="logout">Logout</string>
+    <string name="title_activity_maps_story">MapsStoryActivity</string>
 </resources>

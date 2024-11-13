@@ -15,6 +15,7 @@ import com.example.mystoryapplication.databinding.ActivityListStoryBinding
 import com.example.mystoryapplication.view.ViewModelFactory
 import com.example.mystoryapplication.view.add_story.AddStoryActivity
 import com.example.mystoryapplication.view.main.MainActivity
+import com.example.mystoryapplication.view.maps_story.MapsStoryActivity
 
 class ListStoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityListStoryBinding
@@ -69,6 +70,11 @@ class ListStoryActivity : AppCompatActivity() {
                 }catch (e: Exception){
                     showToast(e.message.toString())
                 }
+                true
+            }
+            R.id.action_map -> {
+                val intent = Intent(this, MapsStoryActivity::class.java)
+                startActivity(intent)
                 true
             }
             else -> super.onOptionsItemSelected(item)
