@@ -82,4 +82,3 @@ class ListStoryViewModel(private val repository: Repository): ViewModel() {
         })
     }
 }
-
