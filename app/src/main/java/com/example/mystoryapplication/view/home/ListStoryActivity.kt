@@ -45,20 +45,15 @@ class ListStoryActivity : AppCompatActivity() {
             showLoading(isLoading)
         }
 
-//        viewModel.getSession().observe(this){ data ->
-//            viewModel.getStoryModel(data.token)
-//            viewModel.listEvents.observe(this) { story ->
-//                val adapter = Adapter()
-//                adapter.submitList(story)
-//                binding.rvStory.adapter = adapter
-//            }
+//        viewModel.getSession().observe(this){
+//            Log.d("ThisIsListToken", it.token)
 //        }
 
-        viewModel.getSession().observe(this){
-            Log.d("ThisIsListToken", it.token)
+        viewModel.getSession().observe(this){responseData ->
+            getData(responseData.token)
         }
 
-        getData()
+//        getData()
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_home, menu)
@@ -95,7 +90,7 @@ class ListStoryActivity : AppCompatActivity() {
     }
 
 
-    private fun getData() {
+    private fun getData(token: String) {
         val adapter = QuoteListAdapter()
         binding.rvStory.adapter = adapter.withLoadStateFooter(
             footer = LoadingStateAdapter{
@@ -103,11 +98,11 @@ class ListStoryActivity : AppCompatActivity() {
             }
         )
 
-//        viewModel.getStoryPaginModel(token)
-        viewModel.quote.observe(this, {
-//            adapter.submitList(it)
+        viewModel.getStoryPaginModel(token).observe(this){
+//        viewModel.quote.observe(this, {
+//            Log.d("jumlahItem", adapter.itemCount.toString())
             adapter.submitData(lifecycle, it)
-        })
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {
