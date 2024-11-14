@@ -47,9 +47,10 @@ class ListStoryViewModel(private val repository: Repository): ViewModel() {
 
     val quote: LiveData<PagingData<ListStoryItem>> =
         repository.getQuote("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLXpXeFYxdU44UEhBRjc1QTEiLCJpYXQiOjE3MzA4MDc0ODl9.kD2FyCfu11tOawMF4IL3E8RyYQEob56GxL0GN24335M").cachedIn(viewModelScope)
-//        _storyResponse.value = it
-//        _listStoryItem.value = it.listStory
-//        _isLoading.value = false
+
+    fun getStoryPaginModel(token: String): LiveData<PagingData<ListStoryItem>>{
+        return repository.getQuote(token).cachedIn(viewModelScope)
+    }
 
 //    fun quote(token: String): LiveData<PagingData<StoryResponse>> {
 //        return repository.getQuote(token).cachedIn(viewModelScope)

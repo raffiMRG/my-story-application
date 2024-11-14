@@ -33,7 +33,7 @@ class Repository private constructor(
     fun getQuote(token: String): LiveData<PagingData<ListStoryItem>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 1
+                pageSize = 20
             ),
             pagingSourceFactory = {
                 val apiService = ApiConfig.getApiService(token)
