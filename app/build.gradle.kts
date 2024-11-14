@@ -73,4 +73,6 @@ dependencies {
     implementation(libs.androidx.camera.camera2)
     implementation(libs.camera.lifecycle)
     implementation(libs.camera.view)
+
+    implementation(libs.androidx.paging.runtime.ktx)
 }

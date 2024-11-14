@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.mystoryapplication.data.UserRepository
+import com.example.mystoryapplication.data.Repository
 import com.example.mystoryapplication.data.api.ApiConfig
 import com.example.mystoryapplication.data.request.LoginRequest
 import com.example.mystoryapplication.data.response.LoginResponse
@@ -15,7 +15,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginViewModel(private val repository: UserRepository) : ViewModel() {
+class LoginViewModel(private val repository: Repository) : ViewModel() {
     private val _loginResponse = MutableLiveData<LoginResponse>()
     val loginResponse: LiveData<LoginResponse> = _loginResponse
 

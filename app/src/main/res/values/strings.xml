@@ -23,4 +23,6 @@
     <string name="map">Maps</string>
     <string name="logout">Logout</string>
     <string name="title_activity_maps_story">MapsStoryActivity</string>
+
+    <string name="retry">Coba lagi</string>
 </resources>
