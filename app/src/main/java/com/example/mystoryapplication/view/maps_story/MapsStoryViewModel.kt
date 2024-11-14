@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.mystoryapplication.data.UserRepository
+import com.example.mystoryapplication.data.Repository
 import com.example.mystoryapplication.data.api.ApiConfig
 import com.example.mystoryapplication.data.response.ListStoryItem
 import com.example.mystoryapplication.data.response.LoginResult
@@ -15,7 +15,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MapsStoryViewModel(private val repository: UserRepository): ViewModel() {
+class MapsStoryViewModel(private val repository: Repository): ViewModel() {
     private val _storyResponse = MutableLiveData<StoryResponse>()
 
     private val _listStoryItem = MutableLiveData<List<ListStoryItem?>?>()

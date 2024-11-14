@@ -25,6 +25,12 @@ interface ApiService {
     @GET("/v1/stories")
     fun getAllStories(): Call<StoryResponse>
 
+    @GET("/v1/stories")
+    suspend fun getPagingStories(
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): StoryResponse
+
 //    https://story-api.dicoding.dev/v1/stories?location=1
     @GET("/v1/stories")
     fun getAllStoriesAndLocation(

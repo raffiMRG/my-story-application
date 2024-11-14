@@ -21,8 +21,10 @@ retrofit = "2.9.0"
 cameraxVersion = "1.2.3"
 googleAndroidLibrariesMapsplatformSecretsGradlePlugin = "2.0.1"
 playServicesMaps = "19.0.0"
+pagingRuntimeKtx = "3.1.0"
 
 [libraries]
+androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraxVersion" }
 camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraxVersion" }
 camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraxVersion" }

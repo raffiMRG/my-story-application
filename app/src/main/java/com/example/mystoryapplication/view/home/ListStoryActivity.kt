@@ -2,6 +2,7 @@ package com.example.mystoryapplication.view.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -13,12 +14,19 @@ import com.example.mystoryapplication.view.adapter.Adapter
 import com.example.mystoryapplication.R
 import com.example.mystoryapplication.databinding.ActivityListStoryBinding
 import com.example.mystoryapplication.view.ViewModelFactory
+import com.example.mystoryapplication.view.adapter.LoadingStateAdapter
+import com.example.mystoryapplication.view.adapter.QuoteListAdapter
 import com.example.mystoryapplication.view.add_story.AddStoryActivity
+import com.example.mystoryapplication.view.login.LoginViewModel
 import com.example.mystoryapplication.view.main.MainActivity
 import com.example.mystoryapplication.view.maps_story.MapsStoryActivity
 
 class ListStoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityListStoryBinding
+//    private val viewModel: ListStoryViewModel by viewModels {
+//        ViewModelFactory(this)
+//    }
+
     private val viewModel by viewModels<ListStoryViewModel> {
         ViewModelFactory.getInstance(this)
     }
@@ -37,15 +45,20 @@ class ListStoryActivity : AppCompatActivity() {
             showLoading(isLoading)
         }
 
-        viewModel.getSession().observe(this){ data ->
-            viewModel.getStoryModel(data.token)
-            viewModel.listEvents.observe(this) { story ->
-                val adapter = Adapter()
-                adapter.submitList(story)
-                binding.rvStory.adapter = adapter
-            }
+//        viewModel.getSession().observe(this){ data ->
+//            viewModel.getStoryModel(data.token)
+//            viewModel.listEvents.observe(this) { story ->
+//                val adapter = Adapter()
+//                adapter.submitList(story)
+//                binding.rvStory.adapter = adapter
+//            }
+//        }
+
+        viewModel.getSession().observe(this){
+            Log.d("ThisIsListToken", it.token)
         }
 
+        getData()
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_home, menu)
@@ -79,6 +92,22 @@ class ListStoryActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+
+    private fun getData() {
+        val adapter = QuoteListAdapter()
+        binding.rvStory.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter{
+                adapter.retry()
+            }
+        )
+
+//        viewModel.getStoryPaginModel(token)
+        viewModel.quote.observe(this, {
+//            adapter.submitList(it)
+            adapter.submitData(lifecycle, it)
+        })
     }
 
     private fun showLoading(isLoading: Boolean) {
