@@ -26,8 +26,10 @@ coreTesting = "2.1.0"
 kotlinxCoroutinesTest = "1.6.1"
 mockitoCore = "4.4.0"
 mockitoInline = "4.4.0"
+playServicesLocation = "21.2.0"
 
 [libraries]
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockitoInline" }
