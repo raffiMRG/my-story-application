@@ -3,7 +3,7 @@ package com.example.mystoryapplication.view.register
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.mystoryapplication.data.UserRepository
+import com.example.mystoryapplication.data.Repository
 import com.example.mystoryapplication.data.api.ApiConfig
 import com.example.mystoryapplication.data.request.RegisterRequest
 import com.example.mystoryapplication.data.response.BasicResponse
@@ -11,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RegisterViewModel(private val repository: UserRepository): ViewModel() {
+class RegisterViewModel(private val repository: Repository): ViewModel() {
     private val _regisResponse = MutableLiveData<BasicResponse?>()
     val regisResponse: LiveData<BasicResponse?> = _regisResponse
 

@@ -14,6 +14,7 @@ import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Query
 
 interface ApiService {
 //    @GET("/v1/stories")
@@ -23,6 +24,18 @@ interface ApiService {
 
     @GET("/v1/stories")
     fun getAllStories(): Call<StoryResponse>
+
+    @GET("/v1/stories")
+    suspend fun getPagingStories(
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): StoryResponse
+
+//    https://story-api.dicoding.dev/v1/stories?location=1
+    @GET("/v1/stories")
+    fun getAllStoriesAndLocation(
+        @Query("location") location: String
+    ): Call<StoryResponse>
 
     @Multipart
     @POST("/v1/stories")

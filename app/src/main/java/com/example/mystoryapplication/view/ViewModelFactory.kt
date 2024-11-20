@@ -3,14 +3,15 @@ package com.example.mystoryapplication.view
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.dicoding.picodiploma.loginwithanimation.di.Injection
+import com.example.mystoryapplication.data.di.Injection
 import com.example.mystoryapplication.view.main.MainViewModel
-import com.example.mystoryapplication.data.UserRepository
+import com.example.mystoryapplication.data.Repository
 import com.example.mystoryapplication.view.home.ListStoryViewModel
 import com.example.mystoryapplication.view.login.LoginViewModel
+import com.example.mystoryapplication.view.maps_story.MapsStoryViewModel
 import com.example.mystoryapplication.view.register.RegisterViewModel
 
-class ViewModelFactory(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory(private val repository: Repository) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -26,6 +27,9 @@ class ViewModelFactory(private val repository: UserRepository) : ViewModelProvid
             }
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 RegisterViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(MapsStoryViewModel::class.java) -> {
+                MapsStoryViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
